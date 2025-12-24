@@ -4,19 +4,17 @@ import com.company.supportsystem.infrastructure.web.dto.CreateTicketRequest;
 import com.company.supportsystem.application.usecase.ticket.CreateTicketUseCaseImpl;
 import com.company.supportsystem.domain.model.aggregates.Ticket;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/tickets")
 @CrossOrigin(origins = "http://localhost:3000")
+@RequiredArgsConstructor
 public class TicketController {
 
     private final CreateTicketUseCaseImpl createTicketUseCase;
-
-    public TicketController(CreateTicketUseCaseImpl createTicketUseCase) {
-        this.createTicketUseCase = createTicketUseCase;
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
