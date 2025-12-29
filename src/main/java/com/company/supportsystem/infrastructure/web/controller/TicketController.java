@@ -1,6 +1,7 @@
 package com.company.supportsystem.infrastructure.web.controller;
 
 import com.company.supportsystem.application.usecase.ticket.GetAllTicketsUseCaseImpl;
+import com.company.supportsystem.application.usecase.ticket.GetTicketByIdUseCaseImpl;
 import com.company.supportsystem.infrastructure.web.dto.CreateTicketRequest;
 import com.company.supportsystem.application.usecase.ticket.CreateTicketUseCaseImpl;
 import com.company.supportsystem.domain.model.aggregates.Ticket;
@@ -18,6 +19,7 @@ public class TicketController {
 
     private final CreateTicketUseCaseImpl createTicketUseCase;
     private final GetAllTicketsUseCaseImpl getAllTicketsUseCase;
+    private final GetTicketByIdUseCaseImpl getTicketByIdUseCase;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -33,4 +35,10 @@ public class TicketController {
     public List<Ticket> getAllTickets() {
         return getAllTicketsUseCase.execute();
     }
+
+    @GetMapping("/{id}")
+    public Ticket getTicketById(@PathVariable String id) {
+        return getTicketByIdUseCase.execute(id);
+    }
+
 }
