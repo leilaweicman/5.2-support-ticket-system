@@ -10,6 +10,8 @@ public interface TicketRepository {
 
     Ticket save(Ticket ticket);
 
+    List<Ticket> findAll();
+
     Optional<Ticket> findById(TicketId id);
 
     List<Ticket> findAllActive();
