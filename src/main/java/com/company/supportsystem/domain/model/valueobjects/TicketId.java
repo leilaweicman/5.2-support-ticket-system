@@ -6,18 +6,14 @@ import lombok.Getter;
 import java.util.Objects;
 import java.util.UUID;
 
-@Getter
-@EqualsAndHashCode
-public class TicketId {
+public record TicketId(String value) {
 
-    private final String value;
-
-    public TicketId() {
-        this.value = UUID.randomUUID().toString();
+    public static TicketId generate() {
+        return new TicketId(UUID.randomUUID().toString());
     }
 
-    public TicketId(String value) {
-        this.value = value;
+    public static TicketId from(String value) {
+        return new TicketId(value);
     }
 }
 

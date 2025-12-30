@@ -34,7 +34,7 @@ public class TicketRepositoryAdapter implements TicketRepository {
 
     @Override
     public Optional<Ticket> findById(TicketId id) {
-        return repository.findById(id.getValue())
+        return repository.findById(id.value())
                 .map(TicketEntityMapper::toDomain);
     }
 

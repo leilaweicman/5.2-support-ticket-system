@@ -1,5 +1,6 @@
 package com.company.supportsystem.infrastructure.persistence.jpa.entity;
 
+import com.company.supportsystem.domain.model.valueobjects.TicketStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,9 @@ public class TicketEntity {
 
     private String description;
     private String solution;
-    private String status;
+
+    @Enumerated(EnumType.STRING)
+    private TicketStatus status;
 
     private LocalDateTime createdAt;
     private LocalDateTime closedAt;

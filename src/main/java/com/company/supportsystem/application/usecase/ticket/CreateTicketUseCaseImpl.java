@@ -12,7 +12,7 @@ public class CreateTicketUseCaseImpl implements CreateTicketUseCase {
     private final TicketRepository ticketRepository;
 
     public Ticket execute(String customerId, String createdByUserId, String description) {
-        Ticket ticket = new Ticket(customerId, createdByUserId, description);
+        Ticket ticket = Ticket.create(customerId, createdByUserId, description);
         return ticketRepository.save(ticket);
     }
 }
