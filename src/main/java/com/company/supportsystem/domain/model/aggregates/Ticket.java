@@ -5,6 +5,7 @@ import com.company.supportsystem.domain.model.valueobjects.TicketId;
 import com.company.supportsystem.domain.model.valueobjects.TicketStatus;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -24,13 +25,68 @@ public class Ticket {
     private final LocalDateTime createdAt;
     private LocalDateTime closedAt;
 
-    public Ticket(String customerId, String createdByUserId, String description) {
-        this.id = new TicketId();
+    private Ticket(
+            TicketId id,
+            String customerId,
+            String createdByUserId,
+            String description,
+            TicketStatus status,
+            LocalDateTime createdAt,
+            LocalDateTime closedAt,
+            String assignedToUserId,
+            String solution
+    ) {
+        this.id = id;
         this.customerId = customerId;
         this.createdByUserId = createdByUserId;
         this.description = description;
-        this.status = TicketStatus.CREATED;
-        this.createdAt = LocalDateTime.now();
+        this.status = status;
+        this.createdAt = createdAt;
+        this.closedAt = closedAt;
+        this.assignedToUserId = assignedToUserId;
+        this.solution = solution;
+    }
+
+    public static Ticket create(
+            String customerId,
+            String createdByUserId,
+            String description
+    ) {
+        return new Ticket(
+                TicketId.generate(),
+                customerId,
+                createdByUserId,
+                description,
+                TicketStatus.CREATED,
+                LocalDateTime.now(),
+                null,
+                null,
+                null
+        );
+    }
+
+    public static Ticket rehydrate(
+            TicketId id,
+            String customerId,
+            String createdByUserId,
+            String description,
+            TicketStatus status,
+            LocalDateTime createdAt,
+            LocalDateTime closedAt,
+            String assignedToUserId,
+            String solution
+    ) {
+        return new Ticket(
+                id,
+                customerId,
+                createdByUserId,
+                description,
+                status,
+                createdAt,
+                closedAt,
+                assignedToUserId,
+                solution
+        );
     }
 
     public void assignTo(String technicianUserId) {
