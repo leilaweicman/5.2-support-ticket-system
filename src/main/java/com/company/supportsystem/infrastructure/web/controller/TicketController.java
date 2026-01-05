@@ -24,6 +24,7 @@ public class TicketController {
     private final AssignTicketUseCase assignTicketUseCase;
     private final StartTicketProgressUseCase startTicketProgressUseCase;
     private final ResolveTicketUseCase resolveTicketUseCase;
+    private final CloseTicketUseCase closeTicketUseCase;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -66,4 +67,10 @@ public class TicketController {
     ) {
         return resolveTicketUseCase.execute(id, request.solution());
     }
+
+    @PutMapping("/{id}/close")
+    public Ticket closeTicket(@PathVariable String id) {
+        return closeTicketUseCase.execute(id);
+    }
+
 }
