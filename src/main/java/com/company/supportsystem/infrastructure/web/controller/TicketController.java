@@ -4,6 +4,7 @@ import com.company.supportsystem.application.usecase.ticket.*;
 import com.company.supportsystem.infrastructure.web.dto.AssignTicketRequest;
 import com.company.supportsystem.infrastructure.web.dto.CreateTicketRequest;
 import com.company.supportsystem.domain.model.aggregates.Ticket;
+import com.company.supportsystem.infrastructure.web.dto.ResolveTicketRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,8 @@ public class TicketController {
     private final GetTicketByIdUseCaseImpl getTicketByIdUseCase;
     private final AssignTicketUseCase assignTicketUseCase;
     private final StartTicketProgressUseCase startTicketProgressUseCase;
+    private final ResolveTicketUseCase resolveTicketUseCase;
+    private final CloseTicketUseCase closeTicketUseCase;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -55,6 +58,19 @@ public class TicketController {
     @PutMapping("/{id}/start-progress")
     public Ticket startProgress(@PathVariable String id) {
         return startTicketProgressUseCase.execute(id);
+    }
+
+    @PutMapping("/{id}/resolve")
+    public Ticket resolveTicket(
+            @PathVariable String id,
+            @RequestBody ResolveTicketRequest request
+    ) {
+        return resolveTicketUseCase.execute(id, request.solution());
+    }
+
+    @PutMapping("/{id}/close")
+    public Ticket closeTicket(@PathVariable String id) {
+        return closeTicketUseCase.execute(id);
     }
 
 }
