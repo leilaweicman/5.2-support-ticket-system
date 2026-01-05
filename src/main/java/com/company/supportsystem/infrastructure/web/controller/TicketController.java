@@ -1,11 +1,8 @@
 package com.company.supportsystem.infrastructure.web.controller;
 
-import com.company.supportsystem.application.usecase.ticket.AssignTicketUseCase;
-import com.company.supportsystem.application.usecase.ticket.GetAllTicketsUseCaseImpl;
-import com.company.supportsystem.application.usecase.ticket.GetTicketByIdUseCaseImpl;
+import com.company.supportsystem.application.usecase.ticket.*;
 import com.company.supportsystem.infrastructure.web.dto.AssignTicketRequest;
 import com.company.supportsystem.infrastructure.web.dto.CreateTicketRequest;
-import com.company.supportsystem.application.usecase.ticket.CreateTicketUseCaseImpl;
 import com.company.supportsystem.domain.model.aggregates.Ticket;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +21,7 @@ public class TicketController {
     private final GetAllTicketsUseCaseImpl getAllTicketsUseCase;
     private final GetTicketByIdUseCaseImpl getTicketByIdUseCase;
     private final AssignTicketUseCase assignTicketUseCase;
+    private final StartTicketProgressUseCase startTicketProgressUseCase;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -53,4 +51,10 @@ public class TicketController {
         assignTicketUseCase.execute(id, request.technicianUserId());
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}/start-progress")
+    public Ticket startProgress(@PathVariable String id) {
+        return startTicketProgressUseCase.execute(id);
+    }
+
 }
